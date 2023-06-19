@@ -1,0 +1,313 @@
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 8.0.31 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use samyuktha;
+ERROR 1049 (42000): Unknown database 'samyuktha'
+mysql> create database samyuktha;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use samyuktha;
+Database changed
+mysql> create table memon(
+    -> ID int,
+    -> Firstname varchar(20),
+    -> Secondname varchar(20),
+    -> Address varchar(20),
+    -> City varchar(20),
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 7
+mysql> create table memon(
+    -> ID int,
+    -> Firstname varchar(20),
+    -> Secondname varchar(20),
+    -> Address varchar(20),
+    -> City varchar(20)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into menon values (1, "subash","E","rasipuram","namakkal");
+ERROR 1146 (42S02): Table 'samyuktha.menon' doesn't exist
+mysql> insert into memon values (1, "subash","E","rasipuram","namakkal");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into memon values (2, "sriarun","M","peravurani","tanjore");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into memon values (2, "jana","G","sattur","virudhunagar");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into memon values (4, "rengaraj","S","sattur","virudhunagar");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from memon;
++------+-----------+------------+------------+--------------+
+| ID   | Firstname | Secondname | Address    | City         |
++------+-----------+------------+------------+--------------+
+|    1 | subash    | E          | rasipuram  | namakkal     |
+|    2 | sriarun   | M          | peravurani | tanjore      |
+|    2 | jana      | G          | sattur     | virudhunagar |
+|    4 | rengaraj  | S          | sattur     | virudhunagar |
++------+-----------+------------+------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> update memon set ID=3 where Secondname="G";
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from memon;
++------+-----------+------------+------------+--------------+
+| ID   | Firstname | Secondname | Address    | City         |
++------+-----------+------------+------------+--------------+
+|    1 | subash    | E          | rasipuram  | namakkal     |
+|    2 | sriarun   | M          | peravurani | tanjore      |
+|    3 | jana      | G          | sattur     | virudhunagar |
+|    4 | rengaraj  | S          | sattur     | virudhunagar |
++------+-----------+------------+------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table memon add coloumn email carchar(20);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'email carchar(20)' at line 1
+mysql> alter table memon add coloumn email varchar(20);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'email varchar(20)' at line 1
+mysql> ALTER TABLE memon ADD COLUMN email VARCHAR(100);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> UPDATE memon SET email = 'samyukthahot@gmail.com' where ID=4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> DELETE FROM memon where ID=3;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from memon;
++------+-----------+------------+------------+--------------+------------------------+
+| ID   | Firstname | Secondname | Address    | City         | email                  |
++------+-----------+------------+------------+--------------+------------------------+
+|    1 | subash    | E          | rasipuram  | namakkal     | NULL                   |
+|    2 | sriarun   | M          | peravurani | tanjore      | NULL                   |
+|    4 | rengaraj  | S          | sattur     | virudhunagar | samyukthahot@gmail.com |
++------+-----------+------------+------------+--------------+------------------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from memon where ID between 1 and 3;
++------+-----------+------------+------------+----------+-------+
+| ID   | Firstname | Secondname | Address    | City     | email |
++------+-----------+------------+------------+----------+-------+
+|    1 | subash    | E          | rasipuram  | namakkal | NULL  |
+|    2 | sriarun   | M          | peravurani | tanjore  | NULL  |
++------+-----------+------------+------------+----------+-------+
+2 rows in set (0.01 sec)
+
+mysql> select * from memon where ID between 1 and 4;
++------+-----------+------------+------------+--------------+------------------------+
+| ID   | Firstname | Secondname | Address    | City         | email                  |
++------+-----------+------------+------------+--------------+------------------------+
+|    1 | subash    | E          | rasipuram  | namakkal     | NULL                   |
+|    2 | sriarun   | M          | peravurani | tanjore      | NULL                   |
+|    4 | rengaraj  | S          | sattur     | virudhunagar | samyukthahot@gmail.com |
++------+-----------+------------+------------+--------------+------------------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from memon where name IN ('sriarun','subash');
+ERROR 1054 (42S22): Unknown column 'name' in 'where clause'
+mysql> select * from memon WHERE Firstname IN ('sriarun','rengaraj');
++------+-----------+------------+------------+--------------+------------------------+
+| ID   | Firstname | Secondname | Address    | City         | email                  |
++------+-----------+------------+------------+--------------+------------------------+
+|    2 | sriarun   | M          | peravurani | tanjore      | NULL                   |
+|    4 | rengaraj  | S          | sattur     | virudhunagar | samyukthahot@gmail.com |
++------+-----------+------------+------------+--------------+------------------------+
+2 rows in set (0.01 sec)
+
+mysql> insert into memon values (1,"subash","E","rasipuram","namakkal");
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into memon values (1,"subash","E","rasipuram","namakkal",NULL);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from memon;
++------+-----------+------------+------------+--------------+------------------------+
+| ID   | Firstname | Secondname | Address    | City         | email                  |
++------+-----------+------------+------------+--------------+------------------------+
+|    1 | subash    | E          | rasipuram  | namakkal     | NULL                   |
+|    2 | sriarun   | M          | peravurani | tanjore      | NULL                   |
+|    4 | rengaraj  | S          | sattur     | virudhunagar | samyukthahot@gmail.com |
+|    1 | subash    | E          | rasipuram  | namakkal     | NULL                   |
++------+-----------+------------+------------+--------------+------------------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into memon values (3,"jana","G","sattur","namakkal",NULL);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from memon;
++------+-----------+------------+------------+--------------+------------------------+
+| ID   | Firstname | Secondname | Address    | City         | email                  |
++------+-----------+------------+------------+--------------+------------------------+
+|    1 | subash    | E          | rasipuram  | namakkal     | NULL                   |
+|    2 | sriarun   | M          | peravurani | tanjore      | NULL                   |
+|    4 | rengaraj  | S          | sattur     | virudhunagar | samyukthahot@gmail.com |
+|    1 | subash    | E          | rasipuram  | namakkal     | NULL                   |
+|    3 | jana      | G          | sattur     | namakkal     | NULL                   |
++------+-----------+------------+------------+--------------+------------------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into memon values (5,"joe","G","attur","kkal",NULL);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into memon values (6,"jdf","G","attur",seral",NULL);
+    ">
+    "> ^C
+mysql> insert into memon values (6,"jdf","G","attur","seral",NULL);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into memon values (7,"jdg","k","mattur","seval",NULL);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into memon values (8,"priya","M","Omr","chennai",NULL);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into memon values (9,"poorni","N","valasaravakkam","chennai",NULL);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into memon values (10,"tharani","M","thammampatti","namakkal",NULL);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from memon;
++------+-----------+------------+----------------+--------------+------------------------+
+| ID   | Firstname | Secondname | Address        | City         | email                  |
++------+-----------+------------+----------------+--------------+------------------------+
+|    1 | subash    | E          | rasipuram      | namakkal     | NULL                   |
+|    2 | sriarun   | M          | peravurani     | tanjore      | NULL                   |
+|    4 | rengaraj  | S          | sattur         | virudhunagar | samyukthahot@gmail.com |
+|    1 | subash    | E          | rasipuram      | namakkal     | NULL                   |
+|    3 | jana      | G          | sattur         | namakkal     | NULL                   |
+|    5 | joe       | G          | attur          | kkal         | NULL                   |
+|    6 | jdf       | G          | attur          | seral        | NULL                   |
+|    7 | jdg       | k          | mattur         | seval        | NULL                   |
+|    8 | priya     | M          | Omr            | chennai      | NULL                   |
+|    9 | poorni    | N          | valasaravakkam | chennai      | NULL                   |
+|   10 | tharani   | M          | thammampatti   | namakkal     | NULL                   |
++------+-----------+------------+----------------+--------------+------------------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from memon order by ID;
++------+-----------+------------+----------------+--------------+------------------------+
+| ID   | Firstname | Secondname | Address        | City         | email                  |
++------+-----------+------------+----------------+--------------+------------------------+
+|    1 | subash    | E          | rasipuram      | namakkal     | NULL                   |
+|    1 | subash    | E          | rasipuram      | namakkal     | NULL                   |
+|    2 | sriarun   | M          | peravurani     | tanjore      | NULL                   |
+|    3 | jana      | G          | sattur         | namakkal     | NULL                   |
+|    4 | rengaraj  | S          | sattur         | virudhunagar | samyukthahot@gmail.com |
+|    5 | joe       | G          | attur          | kkal         | NULL                   |
+|    6 | jdf       | G          | attur          | seral        | NULL                   |
+|    7 | jdg       | k          | mattur         | seval        | NULL                   |
+|    8 | priya     | M          | Omr            | chennai      | NULL                   |
+|    9 | poorni    | N          | valasaravakkam | chennai      | NULL                   |
+|   10 | tharani   | M          | thammampatti   | namakkal     | NULL                   |
++------+-----------+------------+----------------+--------------+------------------------+
+11 rows in set (0.00 sec)
+
+mysql> select count (*) from memon where city="namakkal";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*) from memon where city="namakkal"' at line 1
+mysql> select count(*) from memon where city="namakkal";
++----------+
+| count(*) |
++----------+
+|        4 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> ALTER TABLE memon ADD COLUMN marks int;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>  UPDATE memon SET mark = 80 where ID=1;
+ERROR 1054 (42S22): Unknown column 'mark' in 'field list'
+mysql>  UPDATE memon SET marks = 80 where ID=1;
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql>  UPDATE memon SET marks = 70 where ID=2;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  UPDATE memon SET marks = 67 where ID=3;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  UPDATE memon SET marks = 65 where ID=4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  UPDATE memon SET marks = 45 where ID=5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  UPDATE memon SET marks = 95 where ID=6;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  UPDATE memon SET marks = 55 where ID=7;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  UPDATE memon SET marks = 66 where ID=7;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  UPDATE memon SET marks = 55 where ID=8;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  UPDATE memon SET marks = 77 where ID=9;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  UPDATE memon SET marks = 97 where ID=10;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from memon;
++------+-----------+------------+----------------+--------------+------------------------+-------+
+| ID   | Firstname | Secondname | Address        | City         | email                  | marks |
++------+-----------+------------+----------------+--------------+------------------------+-------+
+|    1 | subash    | E          | rasipuram      | namakkal     | NULL                   |    80 |
+|    2 | sriarun   | M          | peravurani     | tanjore      | NULL                   |    70 |
+|    4 | rengaraj  | S          | sattur         | virudhunagar | samyukthahot@gmail.com |    65 |
+|    1 | subash    | E          | rasipuram      | namakkal     | NULL                   |    80 |
+|    3 | jana      | G          | sattur         | namakkal     | NULL                   |    67 |
+|    5 | joe       | G          | attur          | kkal         | NULL                   |    45 |
+|    6 | jdf       | G          | attur          | seral        | NULL                   |    95 |
+|    7 | jdg       | k          | mattur         | seval        | NULL                   |    66 |
+|    8 | priya     | M          | Omr            | chennai      | NULL                   |    55 |
+|    9 | poorni    | N          | valasaravakkam | chennai      | NULL                   |    77 |
+|   10 | tharani   | M          | thammampatti   | namakkal     | NULL                   |    97 |
++------+-----------+------------+----------------+--------------+------------------------+-------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT SUM(marks) from memon;
++------------+
+| SUM(marks) |
++------------+
+|        797 |
++------------+
+1 row in set (0.01 sec)
+
+mysql> select AVG(marks) from memon;
++------------+
+| AVG(marks) |
++------------+
+|    72.4545 |
++------------+
+1 row in set (0.01 sec)
